@@ -1,0 +1,19 @@
+- name: Disables bind if installed
+  service: name=bind9 state=stopped enabled=false
+  ignore_errors: true
+
+- name: Installs dnsmasq
+  apt: pkg=dnsmasq state=present
+
+- name: Deploys config
+  template:
+    src: dnsmasq.conf.j2
+    dest: /etc/dnsmasq.d/{{ dnsmasq_config }}
+  notify: Restart dnsmasq
+
+- name: Deploys addn_hosts
+  template:
+    src: addn-hosts.j2
+    dest: /etc/dnsmasq_addn_hosts
+  when: dnsmasq_addn_hosts
+

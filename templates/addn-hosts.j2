@@ -1,0 +1,7 @@
+################################################
+# Ansible Managed                              #
+# ansible-dnsmasq/templates/addn-hosts.conf.j2 #
+################################################
+{% for item in dnsmasq_addn_hosts_entries %}
+{{ item }}
+{% endfor %}
